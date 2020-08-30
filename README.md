@@ -6,7 +6,7 @@
  - Django Restframework(Rest Framework)
  - Pytest(Testing Framework)
  
- ###Basic SetUp
+ ### Basic SetUp
 1. Install VirtualEnvironment setup : *pip install virtualenvwrapper-win*
 2. Create VirtualEnvironment and activating: *mkvirtualenv project*
 3. Create new folder : *mkdir pro*
