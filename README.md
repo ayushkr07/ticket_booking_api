@@ -39,3 +39,6 @@
 
 #### An endpoint to view the user’s details based on the ticket id.
 ![](images/5.png)
+
+#### Auto Expire ticket code.
+![](images/expire_ticket_code.png)
