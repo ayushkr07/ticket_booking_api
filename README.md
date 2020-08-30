@@ -20,6 +20,9 @@
 ## Testing
   - Write in terminal : *py.test*
 
+## Admin Panel
+  - username : test
+  - password : Test@123
 
 ## Output
 
