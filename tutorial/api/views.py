@@ -5,6 +5,8 @@ from django.utils.timezone import utc
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from django.http import JsonResponse
+
 from tutorial.models import Movie,Ticket,User
 from tutorial.api.serializers import MovieSerializer,TicketSerializer,UserSerializer
 
@@ -33,7 +35,7 @@ def api_book_ticket(request):
         cnt += i.no_of_tickets
     if cnt + int(data['no_of_tickets']) > 20:
         error_data ={
-            'message' : 'Seat Unavailable(Only'+str(20-cnt)+' seats left)..'
+            'message' : 'Seat Unavailable(Only '+str(20-cnt)+' seats left)..'
         }
         return Response(error_data)
 
@@ -75,7 +77,7 @@ def api_update_ticket_time(request,id):
         ticket = Ticket.objects.get(id=id)
         if cnt + int(ticket.no_of_tickets) > 20:
             error_data = {
-                'message': 'Seat Unavailable(Only' + str(20 - cnt) + ' seats left)..'
+                'message': 'Seat Unavailable(Only ' + str(20 - cnt) + ' seats left)..'
             }
             return Response(error_data)
         ticket.time_id = context['time']
@@ -92,10 +94,11 @@ def api_get_all_tickets_for_a_time(request,id):
     expire_ticket()
     try:
         tickets = Ticket.objects.filter(time_id=id)
-        serializer_ticket = TicketSerializer(tickets,many=True)
-        return Response(serializer_ticket.data)
+        serializer = TicketSerializer(tickets,many=True)
+        # return JsonResponse(serializer_ticket.data)
+        return JsonResponse({'status': 'success', 'tickets': serializer.data})
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'status': 'failed'})
 
 
 # 4. An endpoint to delete a particular ticket.
@@ -109,20 +112,24 @@ def api_delete_ticket(request,id):
             'status': "success",
             'message': "Ticket deleted"
         }
-        return Response(data)
+        return JsonResponse({'status': 'success', 'data': data})
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse({'status': 'failed', 'message' : 'Ticket not found'})
 
 
 # 5. An endpoint to view the user’s details based on the ticket id.
 @api_view(['GET',])
 def api_get_user_detail_from_ticket(request,id):
     expire_ticket()
-    ticket = Ticket.objects.get(id=id)
-    user=User.objects.get(id=ticket.user_id)
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+    try:
+        ticket = Ticket.objects.get(id=id)
+        user=User.objects.get(id=ticket.user_id)
+        if request.method == 'GET':
+            serializer = UserSerializer(user)
+            return JsonResponse({'status': 'success', 'data': serializer.data})
+    except:
+        return JsonResponse({'status': 'failed', 'message': 'Ticket not found'})
+
 
 
 @api_view(['GET',])
@@ -131,7 +138,8 @@ def api_get_all_movies(request):
     movies = Movie.objects.all()
     if request.method == 'GET':
         serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return JsonResponse({'status': 'success', 'movies': serializer.data})
 
 
 @api_view(['GET',])
