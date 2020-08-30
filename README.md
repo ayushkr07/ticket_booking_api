@@ -1,15 +1,15 @@
 # ticket_booking_api
 
-### Prerequisite..
+## Prerequisite..
  - Python-3
  - Django(Backend Framework)
  - Django Restframework(Rest Framework)
  - Pytest(Testing Framework)
  
-### Database
+## Database
   - Sqlite
  
- ### Basic SetUp
+ ## Basic SetUp
 1. Install VirtualEnvironment setup : *pip install virtualenvwrapper-win*
 2. Create VirtualEnvironment and activating: *mkvirtualenv project*
 3. Create new folder : *mkdir pro*
@@ -18,3 +18,24 @@
 6. Install all the dependencies: *pip install -r requirements.txt*
 7. Run the project: *python manage.py runserver*
 
+
+## Output
+
+#### An endpoint to view all the tickets.
+![](images/get_all_ticket.png)
+
+#### An endpoint to book a ticket using a user’s name, phone number, and timings.
+![](images/1(a).png)
+![](images/1(b).png)
+
+#### An endpoint to update a ticket timing.
+![](images/2.png)
+
+#### An endpoint to view all the tickets for a particular time.
+![](images/3.png)
+
+#### An endpoint to delete a particular ticket.
+![](images/4.png)
+
+#### An endpoint to view the user’s details based on the ticket id.
+![](images/5.png)
