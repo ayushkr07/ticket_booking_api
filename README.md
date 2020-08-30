@@ -6,6 +6,9 @@
  - Django Restframework(Rest Framework)
  - Pytest(Testing Framework)
  
+### Database
+  - Sqlite
+ 
  ### Basic SetUp
 1. Install VirtualEnvironment setup : *pip install virtualenvwrapper-win*
 2. Create VirtualEnvironment and activating: *mkvirtualenv project*

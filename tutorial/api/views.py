@@ -65,8 +65,19 @@ def api_book_ticket(request):
 def api_update_ticket_time(request,id):
     expire_ticket()
     context=request.data
+
+    # Availability of Seats
+    tickets = Ticket.objects.filter(time_id=context['time'])
+    cnt = 0
+    for i in tickets:
+        cnt += i.no_of_tickets
     try:
         ticket = Ticket.objects.get(id=id)
+        if cnt + int(ticket.no_of_tickets) > 20:
+            error_data = {
+                'message': 'Seat Unavailable(Only' + str(20 - cnt) + ' seats left)..'
+            }
+            return Response(error_data)
         ticket.time_id = context['time']
         ticket.save()
         serializer = TicketSerializer(ticket)
